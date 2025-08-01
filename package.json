@@ -1,0 +1,18 @@
+{
+  "name": "tinder",
+  "version": "1.0.0",
+  "description": "Tender-for-dev",
+  "license": "ISC",
+  "author": "Nitesh singh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js ",
+    "dev":"nodemon src/app.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
