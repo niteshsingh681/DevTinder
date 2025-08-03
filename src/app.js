@@ -56,6 +56,54 @@ app.get("/user", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+//route to fetch feed
+// Route to fetch user by email
+app.get("/feed", async (req, res) => {
+  
+
+  try {
+    // Find user(s) feed
+    const target = await User.find({ });
+
+    // If no user found, send appropriate response
+    if (target.length === 0) {
+      return res.status(404).send("User not found");
+    }
+
+    // If user found, send the user data
+    res.status(200).send(target);
+    console.log("User retrieved successfully");
+  } catch (err) {
+    // Catch any server/database error
+    console.error("Error fetching user:", err);
+    res.status(500).send("Internal server error");
+  }
+});
+//update the profile by id
+// Route to update user profile (e.g., firstName)
+app.patch("/profile", async (req, res) => {
+  const userId = req.body._id;
+
+  try {
+    // Find user by _id and update firstName to "Alia"
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },                    // Filter
+      { firstName: "Alia" },             // Update
+      { new: true }                      // Return updated document
+    );
+
+    // If user not found
+    if (!updatedUser) {
+      return res.status(404).send("User not found");
+    }
+
+    console.log("firstName updated successfully");
+    res.status(200).send(updatedUser);
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).send("Internal server error");
+  }
+});
 
 
 // const user=new User(useObj);
