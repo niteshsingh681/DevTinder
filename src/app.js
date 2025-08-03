@@ -1,15 +1,14 @@
 const express = require("express");
 const {connectDB }= require("./config/database.js");
-const User=require("./model/user.js")
+const User=require("./model/user.js");
+
+//User is model
 const app = express(); // Create Express app instance
+//make a dynamic signup api using middldeware of end user 
+app.use(express.json());
+
 app.post("/signup",async(req,res)=>{
-  const useObj={
-    firstName:"ritesh ",
-    lastName:"singh",
-    emailId:"ritesh@gmail.com",
-    password:"hasdjdskjfhfg",
-  }
-  const user=new User(useObj);
+  const user=new User(req.body);
   try{
     await user.save();
 //return a promise

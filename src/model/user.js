@@ -20,3 +20,6 @@ const userSchema= new mongoose.Schema({
     }
 });
 module.exports=mongoose.model("User",userSchema);
+//Creates a Mongoose model named "User" using the userSchema.
+
+//This model represents the collection named users in MongoDB
