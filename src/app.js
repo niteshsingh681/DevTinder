@@ -7,18 +7,26 @@ const app = express(); // Create Express app instance
 //make a dynamic signup api using middldeware of end user 
 app.use(express.json());
 
-app.post("/signup",async(req,res)=>{
-  const user=new User(req.body);
-  try{
+app.post("/signup", async (req, res) => {
+  const user = new User(req.body);
+
+  try {
+    // Attempt to save the new user
     await user.save();
-//return a promise
-   res.send("user added successfully ");
+    res.send("User added successfully");
+  } catch (err) {
+    // Handle validation, duplicate, or DB errors
+    console.error("You got an error: " + err);
+
+    if (err.code === 11000) {
+      // Duplicate email error (unique constraint)
+      return res.status(400).send("Email already exists");
+    }
+
+    res.status(500).send("Failed to add user");
   }
-  catch{
-    console.log(" you get an error ");
-  }
-  
 });
+
 app.delete("/profile", async (req, res) => {
   try {
     const result = await User.deleteOne({ firstName: "nitesh" });
@@ -80,6 +88,52 @@ app.get("/feed", async (req, res) => {
   }
 });
 //update the profile by id
+// Update data of the user
+app.patch("/user/:userId", async (req, res) => {
+
+//  made on postman  and url is http://localhost:100/user/userId 
+// {
+    
+//   "age":52
+// }
+  const userId = req.params.userId;
+  const data = req.body;
+
+  try {
+    // Only allow certain fields to be updated
+    const ALLOWED_UPDATES = ["photoUrl", "about", "gender", "age", "skills","firstName"];
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+//isUpdateAllowed becomes true only if all keys in data are valid.
+    if (!isUpdateAllowed) {
+      throw new Error("Update not allowed");
+    }
+
+    // Skills should not be more than 10
+    if (data.skills && data.skills.length > 10) {
+      throw new Error("Skills cannot be more than 10");
+    }
+
+    // Update the user with validators
+    const user = await User.findByIdAndUpdate(
+      { _id: userId },
+      data,
+      // {
+      //   returnDocument: "after", // returns updated doc
+      //   runValidators: true       // runs schema validators
+      // }
+    );
+
+    console.log(user);
+    res.status(200).send(user);
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err.message);
+  }
+});
+
 // Route to update user profile (e.g., firstName)
 app.patch("/profile", async (req, res) => {
   const userId = req.body._id;
@@ -98,6 +152,30 @@ app.patch("/profile", async (req, res) => {
     }
 
     console.log("firstName updated successfully");
+    res.status(200).send(updatedUser);
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).send("Internal server error");
+  }
+});
+// Route to update user profile  using email id  (e.g., firstName)
+app.patch("/profileEmail", async (req, res) => {
+  const userEmailId = req.body.emailID;
+
+  try {
+    // Find user by _id and update firstName to "Alia"
+    const updatedUser = await User.findOneAndUpdate(
+      { emailID: userEmailId },                    // Filter
+      { firstName: "Alia through email" },             // Update
+      { new: true }                      // Return updated document
+    );
+
+    // If user not found
+    if (!updatedUser) {
+      return res.status(404).send("User not found");
+    }
+
+    console.log("eamilid updated successfully");
     res.status(200).send(updatedUser);
   } catch (err) {
     console.error("Error updating user:", err);
