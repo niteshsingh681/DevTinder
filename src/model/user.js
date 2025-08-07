@@ -10,23 +10,17 @@ const userSchema = new mongoose.Schema({
   },
   emailId: {
     type: String,
-    required: true,
-    unique:true,
-   validate: {
-    validator: function (value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("Enter a valid email");
-      }
-      return true;
-    }
-  }
-
+    unique:true
+   
 
   },
+  //password: { type: String, required: true, select: false },
+
   password: {
     type: String,
-    lowercase: true,
-    required: true
+    //Lowercase: true, => This is not needed as bcrypt will handle the case and it conflict to hashing 
+    required: true,
+    unique:true
   },
   age: {
     type: Number,
