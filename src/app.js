@@ -15,14 +15,9 @@ app.use("/", loginAuth);
 const profile=require("../Routes/profile.js");
 //profile api 
 app.use("/", profile);
-
-
-
-
-
-
-
-
+const request=require("../Routes/request.js");
+//request api
+app.use("/", request);
 // const user=new User(useObj);
 //creating a new instance of usermodel 
 //user.save();
