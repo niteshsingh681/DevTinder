@@ -18,6 +18,8 @@ app.use("/", profile);
 const request=require("../Routes/request.js");
 //request api
 app.use("/", request);
+const user=require("../Routes/user.js");
+app.use("/",user);
 // const user=new User(useObj);
 //creating a new instance of usermodel 
 //user.save();

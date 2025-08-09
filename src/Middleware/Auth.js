@@ -21,7 +21,7 @@ const userAuth = async (req, res, next) => {
         // This allows the next middleware or route handler to access the user information
         next();
     } catch (err) {
-        res.status(400).send("ERROR : " + err.message)
+        res.status(400).send("ERR/AUTH : " + err.message)
     }
 }
 // middleware to check the profileauthentication
