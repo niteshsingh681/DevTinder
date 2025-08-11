@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 authRoutes.use(cookieParser());
 
 authRoutes.post("/login", async (req, res) => {
+  console.log("Login request received:", req.body); 
   try {
     const { emailId, password } = req.body;
 
@@ -42,7 +43,7 @@ authRoutes.post("/login", async (req, res) => {
     });
 
     // 5. Send a success response
-    res.status(200).send("Welcome to the dating app! You are now logged in.");
+    res.status(200).json({mesaage:"Welcome to the dating app! You are now logged in.he",user});
 
   } catch (err) {
     console.error("Login error:", err);

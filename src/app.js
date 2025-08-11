@@ -2,6 +2,7 @@ const express = require("express");
 const {connectDB }= require("./config/database.js");
 const cookieParser = require('cookie-parser');
 const validator = require("validator");
+const cors= require("cors");
 //User is model
 const app = express(); // Create Express app instance
 app.use(cookieParser());
@@ -9,6 +10,13 @@ app.use(cookieParser());
 //make a dynamic signup api using middldeware of end user 
 app.use(express.json());
 const loginAuth=require("../Routes/auth.js");
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true // ✅ correct spelling for backend
+}));
+
 //login api
 app.use("/", loginAuth);
 
