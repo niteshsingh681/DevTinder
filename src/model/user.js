@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     min: 18,
     max: 60,
-     required: true
+     default: 18,
   },
   gender: {
     type: String,
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
-    default: "data:image/jpeg;baAAAQABAAD/2wCEAAsdB//Z"
+    default: "https://media.licdn.com/dms/image/v2/D5603AQHZSFpBd4Iq6Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723209063568?e=1758153600&v=beta&t=XbK9MvXCRxaeSM2EiEh4s4dd4xe-FB16VRS-8pCYHpw"
   },
   skills: {
   type: [String],  // ✅ Capital "S" in String and wrapped in array

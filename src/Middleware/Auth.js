@@ -5,7 +5,8 @@ const userAuth = async (req, res, next) => {
     try {
         const { token } = req.cookies
         if (!token) {
-            throw new Error("Not a Vaid token !!")
+          //  throw new Error("Not a Vaid token !!")
+          res.status(401).send("Not a valid token");
         }
 
         const deocodedObj = await jwt.verify(token, "999@Akshad")
