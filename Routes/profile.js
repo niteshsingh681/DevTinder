@@ -26,7 +26,8 @@ profileRoutes.delete("/profile/delete",userAuth, async (req, res) => {
 profileRoutes.patch("/profile/update", userAuth,async (req, res) => {
 
   try {
-   if(!profileAuth(req)){
+//console.log(req.body);
+   if(!profileAuth(req.body)){
     throw new Error("Invalid update request");
    }
    const updatedData=req.user;

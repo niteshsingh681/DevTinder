@@ -26,21 +26,11 @@ const userAuth = async (req, res, next) => {
     }
 }
 // middleware to check the profileauthentication
-const profileAuth=async (req,res,next)=>{
- try{
-    const isAllowedToUpdate=["firstName", "lastName", "age", "photo","skills"];
-    const isValid=Object.keys(req.body).every((key)=>isAllowedToUpdate.includes(key));
-    if(!isValid){
-        return res.status(400).send("Invalid update request");
-    }
-    return true;
-    
- }
-
-catch(err){
-    res.status(400).send("ERROR : " + err.message)  
-}
+const profileAuth = (reqBody) => {
+  const isAllowedToUpdate = ["firstName", "lastName", "age", "photo", "skills","about"];
+  return Object.keys(reqBody).every((key) => isAllowedToUpdate.includes(key));
 };
+
 
 module.exports = {
     userAuth,profileAuth

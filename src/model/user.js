@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema({
       return true;
     }
   }
+},
+about:{
+  type:String,
+  default:"hello this is default value of about section "
 }
 
 });

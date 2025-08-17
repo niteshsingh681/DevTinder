@@ -63,7 +63,7 @@ userRoutes.get("/user/connections", userAuth, async (req, res) => {
 });
 
 
-// Get the all users cards except
+// Get the all users cards except(not my connection requests and my own card)=>not single entity from connection request table
 // 1. His own card
 // 2. His connection -> accepted
 // 3. Ignored users -> ignored
