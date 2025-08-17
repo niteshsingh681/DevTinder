@@ -27,9 +27,9 @@ profileRoutes.patch("/profile/update", userAuth,async (req, res) => {
 
   try {
 //console.log(req.body);
-   if(!profileAuth(req.body)){
-    throw new Error("Invalid update request");
-   }
+  //  if(!profileAuth(req.body)){
+  //   throw new Error("Invalid update request");
+  //  }
    const updatedData=req.user;
     Object.keys(req.body).forEach((key) => {
       updatedData[key] = req.body[key];

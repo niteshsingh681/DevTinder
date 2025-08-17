@@ -4,19 +4,20 @@ const userRoutes=express.Router();
 const User = require("../src/model/user.js");
 const ConnectionRequest = require("../src/model/requestUser.js");
 // Get the all pending/rejected  connection requests for the loggedIn user
-userRoutes.get("/user/requests/recieved/:status", userAuth,async(req,res)=>{
+userRoutes.get("/user/requests/recieved", userAuth,async(req,res)=>{
       try{
-        const status=req.params.status;
-        const allowedStatuses=["interested","ignored"];
-        if(!allowedStatuses.includes(status)){
-            return res.status(400).send("Invalid status type: " + status);
-        }
+        // const status=req.params.status;
+        // const allowedStatuses=["interested","ignored"];
+        // if(!allowedStatuses.includes(status)){
+        //     return res.status(400).send("Invalid status type: " + status);
+        // }
         const loggedInUserId=req.user._id;
         const receivedRequests=await ConnectionRequest.find({
-            toUserId:loggedInUserId,
-            status:status
-        }).populate(
-			"fromUserId",
+            fromUserId:loggedInUserId,
+            status:"interested",
+        })
+      .populate(
+			"toUserId",
 			"firstName lastName photo age gender about skills"
       // second parameter is a string inside fields
 
@@ -25,6 +26,7 @@ userRoutes.get("/user/requests/recieved/:status", userAuth,async(req,res)=>{
 		// ); // second parameter is array inside fields
 
 		); 
+    //console.log(receivedRequests);
         res.json({
 			message: "Data fetched successfully",
 			data: receivedRequests,
