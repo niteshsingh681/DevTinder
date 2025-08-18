@@ -6,6 +6,7 @@ const express=require("express");
 const { userAuth } = require("../src/Middleware/Auth.js");
 
 const requestRoutes=express.Router();
+//sending connection request
 requestRoutes.post("/request/send/:status/:toUserId",
 	userAuth,
 	async (req, res) => {
@@ -58,7 +59,7 @@ requestRoutes.post("/request/send/:status/:toUserId",
 	}
 );
 
-
+//accepting connection request
 requestRoutes.post("/request/review/:status/:requestId",
 	userAuth,
 	async (req, res) => {
