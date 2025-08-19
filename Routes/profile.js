@@ -23,6 +23,7 @@ profileRoutes.delete("/profile/delete",userAuth, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 profileRoutes.patch("/profile/update", userAuth,async (req, res) => {
 
   try {
@@ -42,7 +43,8 @@ profileRoutes.patch("/profile/update", userAuth,async (req, res) => {
     // Update the user in the database
     const updatedUser = await User.findByIdAndUpdate(req.user._id, updatedData, { new: true });
 
-   res.status(200).send({
+   res.status(200)
+   .send({
   message: `${updatedUser.firstName}, you updated your profile successfully`,
   updatedUser
 });

@@ -12,10 +12,14 @@ app.use(express.json());
 const loginAuth=require("../Routes/auth.js");
 app.use(cors({
   origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true // ✅ correct spelling for backend
+  credentials: true //correct spelling for backend
 }));
+// app.use((req, res, next) => {
+//   console.log("CORS middleware is running for request:", req.method, req.originalUrl);
+//   next();
+// });
 
 //login api
 app.use("/", loginAuth);

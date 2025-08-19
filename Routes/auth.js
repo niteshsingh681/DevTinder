@@ -76,7 +76,19 @@ authRoutes.post("/signup", async (req, res) => {
 
     // Save the user
     await user.save();
-    res.send("User added successfully");
+     // 3. Create a JWT token
+    const jwtSecret = "999@Akshad"; 
+    const token = jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: "1d" });
+
+    // 4. Set the JWT token as a secure, httpOnly cookie
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 8 * 60 * 60 * 1000), 
+      httpOnly: true,
+      
+    });
+
+    res.status(200)
+    .json({mesaage:"Welcome to the dating app! You are now sign in",user});
 
   }
   catch (err) {
